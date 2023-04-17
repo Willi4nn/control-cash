@@ -44,11 +44,8 @@ export default function TabNavigation() {
                   />
                 }
                 color="white"
-                size="xl"
+                size="2xl"
               />
-              <Text color="white" fontSize="12">
-                {tab.label}
-              </Text>
             </Center>
           </Pressable>
         ))}
