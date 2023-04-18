@@ -6,9 +6,13 @@ export default function TabNavigation() {
   const [selected, setSelected] = useState(0);
 
   const tabItems = [
-    { icon: "plus-circle-outline", selectedIcon: "plus-circle" },
-    { icon: "home-outline", selectedIcon: "home" },
-    { icon: "magnify", selectedIcon: "magnify" },
+    {
+      icon: "plus-circle-outline",
+      selectedIcon: "plus-circle",
+      label: "Adicionar",
+    },
+    { icon: "home-outline", selectedIcon: "home", label: "Início" },
+    { icon: "magnify", selectedIcon: "magnify", label: "Histórico" },
   ];
 
   const handleTabPress = (index) => {
@@ -46,6 +50,11 @@ export default function TabNavigation() {
                 color="white"
                 size="2xl"
               />
+              {selected === index && (
+                <Text color="white" fontSize="12">
+                  {tab.label}
+                </Text>
+              )}
             </Center>
           </Pressable>
         ))}
