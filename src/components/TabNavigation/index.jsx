@@ -22,7 +22,7 @@ export default function TabNavigation() {
   return (
     <Box
       flex={1}
-      bg="white"
+      bg="black.500"
       width="100%"
       position="absolute"
       bottom={0}
