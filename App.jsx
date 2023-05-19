@@ -1,32 +1,17 @@
-import { useRef } from "react";
 import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import { NativeBaseProvider } from "native-base";
-import TabNavigation from "./src/components/TabNavigation";
-import Home from "./src/screens/Home";
+import { NavigationContainer } from "@react-navigation/native";
 import theme from "./src/styles/theme";
-import BottomSheet from "./src/components/BottomSheet";
+import Routes from "./src/screens/routes";
 
 export default function App() {
-  const bottomSheetModalRef = useRef(null);
-  const snapPoints = ["60%"];
-
-  function handlePresentModal() {
-    bottomSheetModalRef.current?.present();
-  }
-  function handleCloseModal() {
-    bottomSheetModalRef.current?.close();
-  }
   return (
     <NativeBaseProvider theme={theme}>
-      <Home handlePresentModal={handlePresentModal} />
-      <TabNavigation />
-      <BottomSheet
-        bottomSheetModalRef={bottomSheetModalRef}
-        snapPoints={snapPoints}
-        handleCloseModal={handleCloseModal}
-      />
-      <StatusBar style="auto" />
+      <NavigationContainer>
+        <StatusBar style="light" />
+        <Routes />
+      </NavigationContainer>
     </NativeBaseProvider>
   );
 }

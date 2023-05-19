@@ -25,7 +25,7 @@ export default function BottomSheet({
         ref={bottomSheetModalRef}
         index={0}
         snapPoints={snapPoints}
-        backgroundStyle={{ borderRadius: 50, backgroundColor: "#333333" }}
+        backgroundStyle={{ borderRadius: 50, backgroundColor: "#1a1a1a" }}
         enablePanGesture={true}
       >
         <KeyboardAvoidingView
@@ -50,12 +50,22 @@ export default function BottomSheet({
                   <Icon name="close" size={24} color="white" />
                 </Button>
               </View>
-              <Input style={{ backgroundColor: "white" }} variant="unstyled">
-                Nome
-              </Input>
-              <Input style={{ backgroundColor: "white" }} variant="unstyled">
-                Preço
-              </Input>
+              <Input
+                style={{
+                  backgroundColor: "#222222",
+                  color: "white",
+                }}
+                variant="unstyled"
+                placeholder="Nome"
+              />
+              <Input
+                style={{
+                  backgroundColor: "#222222",
+                  color: "white",
+                }}
+                variant="unstyled"
+                placeholder="Preço"
+              />
               <Stack space={4} direction="row" justifyContent="space-between">
                 <Button
                   leftIcon={
@@ -68,7 +78,7 @@ export default function BottomSheet({
                   }
                   flex={1}
                   height={50}
-                  bg="gray.100"
+                  bg="#222222"
                 >
                   Entrada
                 </Button>
@@ -83,17 +93,27 @@ export default function BottomSheet({
                   }
                   flex={1}
                   height={50}
-                  bg="gray.100"
+                  bg="#222222"
                 >
                   Saída
                 </Button>
               </Stack>
-              <Input style={{ backgroundColor: "white" }} variant="unstyled">
-                Categoria
-              </Input>
-              <Input style={{ backgroundColor: "white" }} variant="unstyled">
-                Data
-              </Input>
+              <Input
+                style={{
+                  backgroundColor: "#222222",
+                  color: "white",
+                }}
+                variant="unstyled"
+                placeholder="Categoria"
+              />
+              <Input
+                style={{
+                  backgroundColor: "#222222",
+                  color: "white",
+                }}
+                variant="unstyled"
+                placeholder="Data"
+              />
               <Button bg="green.700">Cadastrar</Button>
             </Stack>
           </View>
