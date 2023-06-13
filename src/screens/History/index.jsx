@@ -10,7 +10,7 @@ export default function History() {
   const transactions = [
     {
       id: 1,
-      date: "25 Dez",
+      date: "Dezembro",
       value: 50,
       name: "aaaa",
     },
@@ -80,11 +80,38 @@ export default function History() {
 
   const options = generateOptions();
 
+  const calculatePrices = (filteredTransactions) => {
+    let totalIncome = 0;
+    let totalExpenses = 0;
+
+    filteredTransactions.forEach((transaction) => {
+      if (transaction.value > 0) {
+        totalIncome += transaction.value;
+      } else {
+        totalExpenses += transaction.value;
+      }
+    });
+
+    const balance = totalIncome + totalExpenses;
+
+    return {
+      totalIncome,
+      totalExpenses,
+      balance,
+    };
+  };
+
+  const filteredTransactions = selectedMonth && selectedMonth !== "Todos"
+    ? transactions.filter(transaction => transaction.date.includes(selectedMonth.split(" - ")[0]))
+    : transactions;
+
+  const { totalIncome, totalExpenses, balance } = calculatePrices(filteredTransactions);
+
   return (
-    <Flex flex={1} bg="black" px={5}>
+    <Flex flex={1} bg="black">
       <Flex direction="row" my={50} alignItems="center" alignSelf="center">
         <Logo />
-        <Text color="white" fontSize={27} fontWeight="bold" >
+        <Text color="white" fontSize={27} fontWeight="bold">
           Histórico de Transações
         </Text>
       </Flex>
@@ -108,25 +135,27 @@ export default function History() {
         </Select>
       </Flex>
       <Flex alignItems="center">
-        <Text color="white" py={5} fontSize={27} fontWeight="bold" alignItems="center">Dezembro</Text>
+        <Text color="white" py={5} fontSize={27} fontWeight="bold" alignItems="center">
+          {selectedMonth ? selectedMonth.split(" - ")[0] : "Todos"}
+        </Text>
 
-        <Flex direction="row" w="100%" justifyContent="space-around" >
+        <Flex direction="row" w="100%" justifyContent="space-around" pb={10}>
           <View alignItems="center">
             <Text color="white" fontSize={18}>Entradas</Text>
-            <Price value={200} color="white" fontSize={18} />
+            <Price value={totalIncome} color="white" fontSize={18} />
           </View>
           <View alignItems="center">
             <Text color="white" fontSize={18}>Saídas</Text>
-            <Price value={-150} color="white" fontSize={18} />
+            <Price value={totalExpenses} color="white" fontSize={18} />
           </View>
           <View alignItems="center">
             <Text color="white" fontSize={18}>Saldo</Text>
-            <Price value={50} color="white" fontSize={18} />
+            <Price value={balance} color="white" fontSize={18} />
           </View>
         </Flex>
       </Flex>
-      <ScrollView>
-        {transactions.map((transaction) => {
+      <ScrollView mb={15}>
+        {filteredTransactions.map((transaction) => {
           const showDate = transaction.date !== previousDate;
           previousDate = transaction.date;
 
@@ -134,9 +163,10 @@ export default function History() {
             <Flex
               key={transaction.id}
               p={5}
+              pb={1}
             >
               {showDate && (
-                <Text fontWeight="bold" fontSize={23} color="gray.500" >
+                <Text fontWeight="bold" fontSize={23} color="gray.500">
                   {transaction.date}
                 </Text>
               )}
@@ -145,16 +175,13 @@ export default function History() {
                 alignItems="center"
               >
                 <Box ml={4} mr={2}>
-                  <Icon
-                    type="MaterialIcons"
-                    name="arrow-downward"
-                    fontSize={32}
-                    color="white"
-                  />
+                  <Text fontWeight="bold" fontSize={23} color="gray.500">
+                    V
+                  </Text>
                 </Box>
                 <Flex>
-                  <Price value={50} color="white" fontSize={18} />
-                  <Text fontSize={18} color="gray.500" mt={1} >
+                  <Price value={transaction.value} color="white" fontSize={18} />
+                  <Text fontSize={18} color="gray.500" mt={1}>
                     {transaction.name}
                   </Text>
                 </Flex>

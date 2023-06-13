@@ -6,7 +6,7 @@ export default function Logo() {
       source={require("../../../assets/icon.png")}
       accessibilityLabel="Icon"
       alt="logo"
-      style={{ width: 50, height: 50, marginRight: 20 }}
+      style={{ width: 50, height: 50, marginRight: 10 }}
     />
   )
 }

@@ -33,7 +33,7 @@ export default function BottomSheet({
           style={{ flex: 1 }}
         >
           <View paddingX={8}>
-            <Stack space={5}>
+            <Stack space={3}>
               <View
                 style={{
                   flexDirection: "row",
