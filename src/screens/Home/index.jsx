@@ -1,5 +1,4 @@
-import { View, Button, Text } from "native-base";
-
+import { View, Button, Text, Icon } from "native-base";
 export default function Home({ handlePresentModal }) {
 
   return (

@@ -2,50 +2,14 @@ import { useState } from "react";
 import { Flex, Box, View, Icon, Text, Select, ScrollView } from "native-base";
 import Logo from "../../components/Logo";
 import Price from "../../components/Price";
+import { transactions } from "../../data/transactions";
+import { Ionicons } from '@expo/vector-icons';
 
 export default function History() {
-  const [selectedMonth, setSelectedMonth] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState("Junho - 2023");
   let previousDate = null;
 
-  const transactions = [
-    {
-      id: 1,
-      date: "Dezembro",
-      value: 50,
-      name: "aaaa",
-    },
-    {
-      id: 2,
-      date: "25 Dez",
-      value: 30,
-      name: "aaaa",
-    },
-    {
-      id: 3,
-      date: "24 Dez",
-      value: -20,
-      name: "aaaa",
-    },
-    {
-      id: 4,
-      date: "24 Dez",
-      value: -20,
-      name: "aaaa",
-    },
-    {
-      id: 5,
-      date: "24 Dez",
-      value: -20,
-      name: "aaaa",
-    },
-    {
-      id: 6,
-      date: "24 Dez",
-      value: -20,
-      name: "aaaa",
-    },
-  ];
-
+  // Função para gerar as opções de meses disponíveis
   const generateOptions = () => {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
@@ -78,8 +42,10 @@ export default function History() {
     return options;
   };
 
+  // Gerar as opções de meses disponíveis
   const options = generateOptions();
 
+  // Função para calcular os preços
   const calculatePrices = (filteredTransactions) => {
     let totalIncome = 0;
     let totalExpenses = 0;
@@ -88,11 +54,11 @@ export default function History() {
       if (transaction.value > 0) {
         totalIncome += transaction.value;
       } else {
-        totalExpenses += transaction.value;
+        totalExpenses -= transaction.value;
       }
     });
 
-    const balance = totalIncome + totalExpenses;
+    const balance = totalIncome - totalExpenses;
 
     return {
       totalIncome,
@@ -101,10 +67,16 @@ export default function History() {
     };
   };
 
-  const filteredTransactions = selectedMonth && selectedMonth !== "Todos"
-    ? transactions.filter(transaction => transaction.date.includes(selectedMonth.split(" - ")[0]))
+  // Filtrar as transações com base no mês selecionado
+  const filteredTransactions = selectedMonth !== "Todos"
+    ? transactions.filter(transaction => {
+      const selectedYear = parseInt(selectedMonth.split(" - ")[1]);
+      return transaction.date === selectedMonth.split(" - ")[0] && transaction.year === selectedYear.toString();
+    })
     : transactions;
 
+
+  // Calcular os preços com base nas transações filtradas
   const { totalIncome, totalExpenses, balance } = calculatePrices(filteredTransactions);
 
   return (
@@ -154,30 +126,28 @@ export default function History() {
           </View>
         </Flex>
       </Flex>
-      <ScrollView mb={15}>
+      <ScrollView mb={20}>
         {filteredTransactions.map((transaction) => {
           const showDate = transaction.date !== previousDate;
-          previousDate = transaction.date;
+
+          const isPositive = transaction.value > 0;
 
           return (
-            <Flex
-              key={transaction.id}
-              p={5}
-              pb={1}
-            >
+            <Flex key={transaction.id} p={5} pb={1}>
               {showDate && (
-                <Text fontWeight="bold" fontSize={23} color="gray.500">
-                  {transaction.date}
-                </Text>
-              )}
-              <Flex
-                direction="row"
-                alignItems="center"
-              >
-                <Box ml={4} mr={2}>
+                <Box pb={4}>
                   <Text fontWeight="bold" fontSize={23} color="gray.500">
-                    V
+                    {transaction.date} {transaction.day}
                   </Text>
+                </Box>
+              )}
+              <Flex direction="row" alignItems="flex-start">
+                <Box ml={4} mr={10}>
+                  {isPositive ? (
+                    <Ionicons name="arrow-up" size={30} color="white" />
+                  ) : (
+                    <Ionicons name="arrow-down" size={30} color="white" />
+                  )}
                 </Box>
                 <Flex>
                   <Price value={transaction.value} color="white" fontSize={18} />
