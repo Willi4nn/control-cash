@@ -1,11 +1,17 @@
-import { View, Button, Text, Icon } from "native-base";
+import { View, Button, Text, Icon, Box, Flex } from "native-base";
+import Header from "../../components/Header";
+import ListEntries from "../../components/ListEntries";
+
 export default function Home({ handlePresentModal }) {
 
   return (
-    <View flex={1} bg="black" alignItems="center" justifyContent="center">
-      <Button onPress={handlePresentModal} bg="green.700">
-        <Text>Nova Transação</Text>
-      </Button>
-    </View>
+    <>
+      <Header handlePresentModal={handlePresentModal}/>
+      <Box flex={1} bg="black">
+        <Flex paddingTop={35} paddingLeft={34}>
+          <ListEntries />
+        </Flex>
+      </Box >
+    </>
   );
 }
